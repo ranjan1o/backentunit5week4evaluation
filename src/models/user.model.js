@@ -5,4 +5,4 @@ const userSchema = new monggose.Schema({
     password: { type: String, required: true },
     profile_pic:{type:String,required:true}
 })
-module.exports = monggose.model("user", userSchema);
+module.exports = monggose.model("users", userSchema);
