@@ -35,4 +35,7 @@ const login = async (req, res) => {
         return res.send("something ernt wrong")
     }
 }
-module.exports = { register, login };
+const addBook = async (req, res) => {
+  res.send("book page")
+}
+module.exports = { register, login,addBook };
