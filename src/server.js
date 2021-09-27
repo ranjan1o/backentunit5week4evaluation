@@ -7,7 +7,7 @@ app.use(express.json());
 app.post("/register", register);
 app.post("/login", login);
 app.post("/lecture", addBook);
-
+app.get("/lecture",)
 
 
 app.listen(3001,async function () {

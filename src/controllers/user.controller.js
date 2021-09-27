@@ -1,4 +1,6 @@
 const User = require("../models/user.model");
+const Lecturer = require("../models/lecture.model")
+const student=require("../models/student.model")
 const express = require("express");
 const upload = require("../utils/file.uplaod");
 const route = express.Router();
@@ -19,9 +21,30 @@ const register = async (req, res) => {
         return res.send("something went wrong")
     }
 }
-route.post("/", upload.single("image"), async (req, res) => {
-    res.send("wow");
-})
+
+const lectures = async (req, res) => {
+    if (req.body) {
+        try {
+            const user = await User.findOne({ email: req.body.email }).exec();
+            for (i in user.role) {
+                if (user.role[i]==="admin"||user.role[i]==="instructor") {
+                    return res.send("Book registered sucessfully")
+                }
+            }
+            return res.send("you r not authorized for this");
+        }
+        catch (err) {
+            res.send("err")
+        }
+    }
+    try {
+        const user = await lectures.find()
+        return res.send(user);
+    }
+    catch (err){
+        return  res.send("something ernt wrong")
+    }
+}
 const login = async (req, res) => {
     //console.log(req.body);
     try {
@@ -36,6 +59,13 @@ const login = async (req, res) => {
     }
 }
 const addBook = async (req, res) => {
-  res.send("book page")
+    const a = req.body.role;
+    for (i in a) {
+        if (a[i]==="admin" || a[i]==="istructor") {
+             return res.send("book class sucessfully")
+        }
+    }
+
+   return res.send("you can.t book a lecture")
 }
 module.exports = { register, login,addBook };
