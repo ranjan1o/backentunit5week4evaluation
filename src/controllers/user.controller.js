@@ -22,23 +22,28 @@ const register = async (req, res) => {
     }
 }
 
-const lectures = async (req, res) => {
+const lecture = async (req, res) => {
     if (req.body) {
         try {
-            const user = await User.findOne({ email: req.body.email }).exec();
+            const user = await User.findOne({_id: req.body.intructor }).exec();
+            console.log(user.role);
             for (i in user.role) {
-                if (user.role[i]==="admin"||user.role[i]==="instructor") {
+                if (user.role[i] === "admin" || user.role[i] === "instructor") {
+                    const user1 = await Lecturer.create(req.body);
                     return res.send("Book registered sucessfully")
                 }
             }
             return res.send("you r not authorized for this");
         }
         catch (err) {
-            res.send("err")
+           return res.send("err")
         }
     }
-    try {
-        const user = await lectures.find()
+   
+}
+const getlecture = async (req, res) => {
+     try {
+        const user = await Lecturer.find()
         return res.send(user);
     }
     catch (err){
@@ -68,4 +73,4 @@ const addBook = async (req, res) => {
 
    return res.send("you can.t book a lecture")
 }
-module.exports = { register, login,addBook };
+module.exports = { register, login,addBook,lecture,getlecture};
