@@ -4,11 +4,14 @@ const student=require("../models/student.model")
 const express = require("express");
 const upload = require("../utils/file.uplaod");
 const route = express.Router();
-const register = async (req, res) => {
+const register = (upload.single("image"), async (req, res) => {
+      console.log("enter");
     try {
         const user = await User.findOne({ email: req.body.email }).exec();
-       
+         
         if (!user) {
+            
+         
             console.log(req.body);
             const user1 = await User.create(req.body);
            return res.send("registered sucessfully")
@@ -20,7 +23,7 @@ const register = async (req, res) => {
     catch (err) {
         return res.send("something went wrong")
     }
-}
+})
 
 const lecture = async (req, res) => {
     if (req.body) {
